@@ -33,9 +33,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: |
-          echo ${{ inputs.tags }}
-
       # extract version number, strip the container registry name from the image tag
       - name: Extract version number
         uses: actions-ecosystem/action-regex-match@v2
