@@ -20,6 +20,10 @@ on:
         required: true
         type: string
 
+      slot-name:
+        required: true
+        type: string
+
     secrets:
       azure-credentials:
         required: true
