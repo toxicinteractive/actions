@@ -30,6 +30,7 @@ on:
 
 jobs:
   update-version-number:
+    name: ⬆
     runs-on: ubuntu-latest
 
     steps:

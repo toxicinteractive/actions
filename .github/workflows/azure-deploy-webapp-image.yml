@@ -23,13 +23,14 @@ on:
 
 jobs:
   deploy:
+      name: 🚀
       runs-on: ubuntu-latest
 
       steps:
         - name: Deploy web app
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v2
-          
+
           with:
             app-name: ${{ inputs.app-name }}
             slot-name: ${{ inputs.slot-name }}
