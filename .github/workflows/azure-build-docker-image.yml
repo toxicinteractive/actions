@@ -27,13 +27,13 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      tags: ${{ steps.generate-version-tags.outputs.tags }}
+      tags: ${{ steps.export-tags.outputs.tags }}
 
     steps:
       - uses: actions/checkout@v3
 
       # generate image tag based on the latest git commit/tag
-      - name: Generate version number
+      - name: Generate version numbers
         id: generate-version-tags
         uses: docker/metadata-action@v4
         with:
@@ -44,6 +44,11 @@ jobs:
             type=semver,pattern={{ version }}-{{ date 'YYMMDDHHmm' }}
           flavor: |
             latest=false
+        
+      # output tag versions to caller workflow
+      - name: Export version numbers
+        id: export-tags
+        run: echo "::set-output name=tags::${{ steps.generate-version-tags.outputs.tags }}"
 
       # setup buildx
       - name: Set up Docker Buildx
