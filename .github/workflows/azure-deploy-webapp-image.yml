@@ -29,6 +29,7 @@ jobs:
         - name: Deploy web app
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v2
+          
           with:
             app-name: ${{ inputs.app-name }}
             slot-name: ${{ inputs.slot-name }}
