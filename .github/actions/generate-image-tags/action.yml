@@ -1,0 +1,38 @@
+
+name: Generate image version tags
+description: Generate image version tags based on git commits and semver
+
+inputs:
+  image-name:
+    description: Image name
+    required: true
+
+outputs:
+  image-tags:
+    description: Image tags
+    value: ${{ steps.export-tags.outputs.tags }}
+
+runs:
+  using: composite
+
+  steps:
+    # generate image tag based on the latest git commit/tag
+    - name: Generate version numbers
+      id: generate-version-tags
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ inputs.registry-name }}.azurecr.io/${{ inputs.registry-name }}/${{ inputs.image-name }}
+
+        tags: |
+          type=ref,event=branch,suffix=-{{ sha }}-{{ date 'YYMMDDHHmm' }}
+          type=ref,event=pr,suffix=-{{ sha }}-{{ date 'YYMMDDHHmm' }}
+          type=semver,pattern={{ version }}-{{ date 'YYMMDDHHmm' }}
+        
+        flavor: |
+          latest=false
+
+    # output tag versions to caller workflow
+    - name: Export version numbers
+      id: export-tags
+      run: echo "::set-output name=image-tags::${{ steps.generate-version-tags.outputs.tags }}"
+      shell: bash
