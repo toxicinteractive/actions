@@ -1,4 +1,3 @@
-
 name: Generate image version tags
 description: Generate image version tags based on git commits and semver
 
@@ -14,7 +13,7 @@ inputs:
 outputs:
   image-tags:
     description: Image tags
-    value: ${{ steps.export-tags.outputs.image-tags }}
+    value: ${{ steps.generate-version-tags.outputs.tags }}
 
 runs:
   using: composite
@@ -34,9 +33,3 @@ runs:
         
         flavor: |
           latest=false
-
-    # output tag versions to caller workflow
-    - name: Export version numbers
-      id: export-tags
-      run: echo "::set-output name=image-tags::${{ steps.generate-version-tags.outputs.tags }}"
-      shell: bash

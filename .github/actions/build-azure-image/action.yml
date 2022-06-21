@@ -1,4 +1,3 @@
-
 name: Build and push container image to Azure
 description: Build and push container image to Azure
 
@@ -35,7 +34,7 @@ runs:
     # build and push container to acr
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
-      
+
       with:
         push: true
         tags: ${{ inputs.image-tags }}
