@@ -3,6 +3,10 @@ name: Generate image version tags
 description: Generate image version tags based on git commits and semver
 
 inputs:
+  registry-name:
+    description: ACR name
+    required: true
+
   image-name:
     description: Image name
     required: true
@@ -10,7 +14,7 @@ inputs:
 outputs:
   image-tags:
     description: Image tags
-    value: ${{ steps.export-tags.outputs.tags }}
+    value: ${{ steps.export-tags.outputs.image-tags }}
 
 runs:
   using: composite
