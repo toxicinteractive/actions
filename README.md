@@ -1,2 +1,2 @@
-# common-workflows
-Contains shared GitHub Actions workflows.
+# actions
+Contains shared GitHub Actions actions.
