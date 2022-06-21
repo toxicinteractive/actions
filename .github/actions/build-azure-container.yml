@@ -1,0 +1,14 @@
+
+name: Test action name
+description: Test action description
+
+inputs:
+  input1: 
+    description: Input 1 description
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: echo "hi from action"
+      shell: bash
