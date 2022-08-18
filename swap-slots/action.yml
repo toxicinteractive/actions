@@ -1,0 +1,41 @@
+name: Swap deployment slots
+description: Swaps an Azure deployment slot to the PROD slot
+
+inputs:
+  resource-group-name: 
+    description: Resource group name
+    required: true
+
+  app-name:
+    description: Web app name
+    required: true
+
+  slot-name:
+    description: Slot name
+    required: true
+
+  azure-credentials:
+    description: Azure service principal credentials
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    # log in to azure
+    - name: Log in to Azure
+      uses: azure/login@v1
+
+      with:
+        creds: ${{ inputs.azure-credentials }}
+
+    # swap slots
+    - name: Swap slots
+      uses: azure/CLI@v1
+
+      with:
+        inlineScript: |
+            az webapp deployment slot swap \
+            --resource-group ${{ inputs.resource-group-name }} \
+            --name ${{ inputs.app-name }} \
+            --slot ${{ inputs.slot-name }}
