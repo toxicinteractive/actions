@@ -1,0 +1,40 @@
+name: Get latest image tag
+description: Gets the latest built image tag in an Azure Container Registry
+
+inputs:
+  repository-name: 
+    description: Container repository name
+    required: true
+
+  registry-name:
+    description: Container registry name
+    required: true
+
+  azure-credentials:
+    description: Azure service principal credentials
+    required: true
+
+outputs:
+  latest-tag:
+    description: Latest tag
+    value: ${{ steps.get-latest-tag.outputs.tag }}
+
+runs:
+  using: composite
+
+  steps:
+    # log in to azure
+    - name: Log in to Azure
+      uses: azure/login@v1
+
+      with:
+        creds: ${{ inputs.azure-credentials }}
+
+    # get latest tag
+    - name: Get latest image tag
+      id: get-latest-tag
+      shell: bash
+
+      run: |
+        tag = $(az acr repository show-tags --name ${{ inputs.registry-name }} --repository ${{ inputs.repository-name }} --orderby time_desc --top 1)
+        echo "::set-output name=tag::$tag"
