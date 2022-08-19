@@ -36,5 +36,5 @@ runs:
       shell: bash
 
       run: |
-        tag = $(az acr repository show-tags --name ${{ inputs.registry-name }} --repository ${{ inputs.repository-name }} --orderby time_desc --top 1)
+        tag=$(az acr repository show-tags --name ${{ inputs.registry-name }} --repository ${{ inputs.repository-name }} --orderby time_desc --top 1)
         echo "::set-output name=tag::$tag"
