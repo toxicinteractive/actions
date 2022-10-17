@@ -37,4 +37,4 @@ runs:
 
       run: |
         tag=$(az acr repository show-tags --name ${{ inputs.registry-name }} --repository ${{ inputs.repository-name }} --orderby time_desc --top 1 -o tsv)
-        echo "::set-output name=tag::$tag"
+        echo "tag=$tag" >> $GITHUB_OUTPUT
