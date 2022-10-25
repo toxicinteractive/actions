@@ -14,6 +14,10 @@ inputs:
     description: Image tags
     required: true
 
+  build-args:
+    description: Dockerfile build args
+    required: false
+
 runs:
   using: composite
 
@@ -39,3 +43,4 @@ runs:
         push: true
         tags: ${{ inputs.image-tags }}
         file: ./Dockerfile
+        build-args: ${{ inputs.build-args }}
