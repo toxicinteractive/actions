@@ -18,6 +18,14 @@ inputs:
     description: Dockerfile build args
     required: false
 
+  cache-from:
+    description: Cache options to buildx
+    required: false
+
+  cache-to:
+    description: Cache options to buildx
+    required: false
+
 runs:
   using: composite
 
@@ -44,3 +52,5 @@ runs:
         tags: ${{ inputs.image-tags }}
         file: ./Dockerfile
         build-args: ${{ inputs.build-args }}
+        cache-from: ${{ inputs.cache-from }}
+        cache-to: ${{ inputs.cache-to }}
