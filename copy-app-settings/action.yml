@@ -56,5 +56,5 @@ runs:
             --resource-group ${{ inputs.resource-group-name }} \
             --name ${{ inputs.app-name }} \
             ${{ inputs.destination-slot && format('--slot {0}', inputs.destination-slot) || '' }} \
-            --settings @${{ runner.temp }}/appsettings.json
+            --settings @${{ runner.temp }}/appsettings.json \
             --output none
