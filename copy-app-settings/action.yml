@@ -1,0 +1,59 @@
+name: Copy app settings
+description: Copy all non-slot app settings from one slot to another in an Azure web app
+
+inputs:
+  resource-group-name: 
+    description: Resource group name
+    required: true
+
+  app-name:
+    description: Web app name
+    required: true
+
+  source-slot:
+    description: Source slot (leave empty for production slot)
+    required: false
+
+  destination-slot:
+    description: Destination slot (leave empty for production slot)
+    required: false
+
+  azure-credentials:
+    description: Azure service principal credentials
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    # log in to azure
+    - name: Log in to Azure
+      uses: azure/login@v1
+
+      with:
+        creds: ${{ inputs.azure-credentials }}
+
+    # get app settings from the source slot
+    - name: Copy app settings from the source slot
+      uses: azure/CLI@v1
+
+      with:
+        inlineScript: |
+            az webapp config appsettings list \
+            --resource-group ${{ inputs.resource-group-name }} \
+            --name ${{ inputs.app-name }} \
+            ${{ inputs.source-slot && format('--slot {0}', inputs.source-slot) || '' }} \
+            --query '[?!slotSetting]' \
+            > ${{ runner.temp }}/appsettings.json
+
+    # set app settings on the destination slot
+    - name: Copy app settings to the destination slot
+      uses: azure/CLI@v1
+
+      with:
+        inlineScript: |
+            az webapp config appsettings set \
+            --resource-group ${{ inputs.resource-group-name }} \
+            --name ${{ inputs.app-name }} \
+            ${{ inputs.destination-slot && format('--slot {0}', inputs.destination-slot) || '' }} \
+            @${{ runner.temp }}/appsettings.json
