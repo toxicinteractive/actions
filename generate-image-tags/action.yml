@@ -29,7 +29,7 @@ runs:
         tags: |
           type=ref,event=branch,suffix=-{{ sha }}-{{ date 'YYMMDDHHmm' }}
           type=ref,event=pr,suffix=-{{ sha }}-{{ date 'YYMMDDHHmm' }}
-          type=semver,pattern={{ version }}-{{ date 'YYMMDDHHmm' }}
+          type=ref,event=tag
         
         flavor: |
           latest=false

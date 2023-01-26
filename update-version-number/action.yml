@@ -32,12 +32,12 @@ runs:
   steps:
     # extract version number, strip the container registry name from the image tag
     - name: Extract version number
-      uses: actions-ecosystem/action-regex-match@v2
       id: extract-version
+      shell: bash
 
-      with:
-        text: ${{ inputs.image-tags }}
-        regex: ':(.+)$'
+      run: |
+        tag=$(echo "${{ inputs.image-tags }}" | sed -rn 's/([^:]+):(.+)$/\2/p')
+        echo "$tag"
 
     # log in to azure
     - name: Log in to Azure
@@ -56,5 +56,5 @@ runs:
             --resource-group ${{ inputs.resource-group-name }} \
             --name ${{ inputs.app-name }} \
             --slot ${{ inputs.slot-name }} \
-            --settings ${{ inputs.app-setting-name }}=${{ steps.extract-version.outputs.group1 }} \
+            --settings ${{ inputs.app-setting-name }}=${{ steps.extract-version.outputs.tag }} \
             --output none
