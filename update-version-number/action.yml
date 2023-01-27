@@ -37,7 +37,7 @@ runs:
 
       run: |
         tag=$(echo "${{ inputs.image-tags }}" | sed -rn 's/([^:]+):(.+)$/\2/p')
-        echo "$tag"
+        echo "tag=$tag" >> $GITHUB_OUTPUT
 
     # log in to azure
     - name: Log in to Azure
