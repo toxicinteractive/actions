@@ -20,7 +20,7 @@ inputs:
 
   slot-name:
     description: Slot name
-    required: true
+    required: false
 
   azure-credentials:
     description: Azure service principal credentials
@@ -55,6 +55,6 @@ runs:
             az webapp config appsettings set \
             --resource-group ${{ inputs.resource-group-name }} \
             --name ${{ inputs.app-name }} \
-            --slot ${{ inputs.slot-name }} \
+            --slot ${{ inputs.slot-name || inputs.app-name }} \
             --settings ${{ inputs.app-setting-name }}=${{ steps.extract-version.outputs.tag }} \
             --output none
