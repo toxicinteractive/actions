@@ -55,6 +55,6 @@ runs:
             az webapp config appsettings set \
             --resource-group ${{ inputs.resource-group-name }} \
             --name ${{ inputs.app-name }} \
-            --slot ${{ inputs.slot-name || inputs.app-name }} \
+            ${{ inputs.slot-name && format('--slot {0}', inputs.slot-name) || '' }} \
             --settings ${{ inputs.app-setting-name }}=${{ steps.extract-version.outputs.tag }} \
             --output none
