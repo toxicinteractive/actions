@@ -7,7 +7,7 @@ inputs:
     required: true
 
 outputs:
-  issue_key: 
+  issue-key: 
     description: The issue key
     value: ${{ steps.extract-key.outputs.ISSUE_KEY }}
 
