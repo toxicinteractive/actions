@@ -1,0 +1,29 @@
+name: Get Jira issue key from branch name
+description: Gets the leading Jira issue key from the branch name (x-y) eg lrfnw-001
+
+inputs:
+  prefix:
+    description: Jira issue prefix (xxx as in xxx-000)
+    required: true
+
+outputs:
+  issue_key: 
+    description: The issue key
+    value: ${{ steps.extract-key.outputs.ISSUE_KEY }}
+
+runs:
+  using: composite
+
+  steps:
+    # find the appropriate branch name of the pr depending on trigger (pull_request or workflow_dispatch)
+    # same as echo "HEAD_REF=$([ -n "$GITHUB_HEAD_REF" ] && echo "$GITHUB_HEAD_REF" || echo "$GITHUB_REF_NAME")" >> $GITHUB_ENV
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v6
+
+    # extract the jira issue key from the branch name to use as slot name
+    - name: Extract issue key
+      id: extract-key
+      run: |
+        BRANCH_NAME=${{ steps.branch-name.outputs.current_branch }}
+        echo "ISSUE_KEY=${BRANCH_NAME%"${BRANCH_NAME##${{ inputs.prefix }}-*[0-9]}"}" >> $GITHUB_OUTPUT
