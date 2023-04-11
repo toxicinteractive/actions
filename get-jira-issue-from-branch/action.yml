@@ -27,4 +27,5 @@ runs:
       shell: bash
       run: |
         BRANCH_NAME=${{ steps.branch-name.outputs.current_branch }}
-        echo "ISSUE_KEY=${BRANCH_NAME%"${BRANCH_NAME##${{ inputs.prefix }}-*[0-9]}"}" >> $GITHUB_OUTPUT
+        ISSUE_KEY=${BRANCH_NAME%"${BRANCH_NAME##${{ inputs.prefix }}-*[0-9]}"}
+        echo "ISSUE_KEY=${ISSUE_KEY^^}" >> $GITHUB_OUTPUT
