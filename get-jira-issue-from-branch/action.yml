@@ -6,6 +6,10 @@ inputs:
     description: Jira issue prefix (xxx as in xxx-000)
     required: true
 
+  branch:
+    description: A specific branch to search, instead of auto
+    required: false
+
 outputs:
   issue-key: 
     description: The issue key
@@ -16,8 +20,8 @@ runs:
 
   steps:
     # find the appropriate branch name of the pr depending on trigger (pull_request or workflow_dispatch)
-    # same as echo "HEAD_REF=$([ -n "$GITHUB_HEAD_REF" ] && echo "$GITHUB_HEAD_REF" || echo "$GITHUB_REF_NAME")" >> $GITHUB_ENV
     - name: Get branch name
+      if: ${{ !inputs.branch }}
       id: branch-name
       uses: tj-actions/branch-names@v6
 
@@ -26,7 +30,7 @@ runs:
       id: extract-key
       shell: bash
       run: |
-        BRANCH_NAME=${{ steps.branch-name.outputs.current_branch }}
+        BRANCH_NAME=${{ steps.branch-name.outputs.current_branch || inputs.branch }}
         PREFIX=${{ inputs.prefix }}
         BRANCH_NAME=${BRANCH_NAME,,}
         PREFIX=${PREFIX,,}
