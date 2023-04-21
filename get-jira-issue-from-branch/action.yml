@@ -34,5 +34,5 @@ runs:
         PREFIX=${{ inputs.prefix }}
         BRANCH_NAME=${BRANCH_NAME,,}
         PREFIX=${PREFIX,,}
-        ISSUE_KEY=${BRANCH_NAME%"${BRANCH_NAME##$PREFIX-*[0-9]}"}
+        ISSUE_KEY=$(echo "$BRANCH_NAME" | sed -e "s/\($PREFIX-[0-9]*\)-.*/\1/")
         echo "ISSUE_KEY=${ISSUE_KEY^^}" >> $GITHUB_OUTPUT
