@@ -22,7 +22,7 @@ runs:
     # generate image tag based on the latest git commit/tag
     - name: Generate version numbers
       id: generate-version-tags
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         images: ${{ inputs.registry-name }}.azurecr.io/${{ inputs.registry-name }}/${{ inputs.image-name }}
 
