@@ -28,14 +28,14 @@ runs:
   steps:
     # log in to azure
     - name: Log in to Azure
-      uses: azure/login@v1
+      uses: azure/login@v2
 
       with:
         creds: ${{ inputs.azure-credentials }}
 
     # get app settings from the source slot
     - name: Copy app settings from the source slot
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
 
       with:
         inlineScript: |
@@ -48,7 +48,7 @@ runs:
 
     # set app settings on the destination slot
     - name: Copy app settings to the destination slot
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
 
       with:
         inlineScript: |
