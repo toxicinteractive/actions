@@ -15,6 +15,10 @@ outputs:
     description: The issue key
     value: ${{ steps.extract-key.outputs.ISSUE_KEY }}
 
+  issue-key-lower:
+    description: The issue key in lowercase
+    value: ${{ steps.extract-key.outputs.ISSUE_KEY_LOWER }}
+
 runs:
   using: composite
 
@@ -36,3 +40,4 @@ runs:
         PREFIX=${PREFIX,,}
         ISSUE_KEY=$(echo "$BRANCH_NAME" | sed -e "s/\($PREFIX-[0-9]*\)-.*/\1/")
         echo "ISSUE_KEY=${ISSUE_KEY^^}" >> $GITHUB_OUTPUT
+        echo "ISSUE_KEY_LOWER=${ISSUE_KEY,,}" >> $GITHUB_OUTPUT
