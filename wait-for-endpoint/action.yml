@@ -25,11 +25,12 @@ runs:
   using: composite
 
   steps:
-    - name: Run a script
+    - name: Wait for endpoint
       env: 
         url: ${{ inputs.url }}
         expectedStatus: ${{ inputs.expected-status }}
         timeout: ${{ inputs.timeout }}
         headerName: ${{ inputs.header-name }}
         expectedHeaderValue: ${{ inputs.header-value }}
+      shell: bash
       run: ./action.sh
