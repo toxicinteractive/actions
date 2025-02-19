@@ -33,4 +33,4 @@ runs:
         headerName: ${{ inputs.header-name }}
         expectedHeaderValue: ${{ inputs.header-value }}
       shell: bash
-      run: action.sh
+      run: ./wait-for-endpoint/action.sh
