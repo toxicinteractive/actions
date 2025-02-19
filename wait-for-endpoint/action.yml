@@ -1,0 +1,35 @@
+name: "Wait For Endpoint"
+description: "Wait for an endpoint to responde with selected status code and optional header value"
+
+inputs:
+  url:
+    description: The URL to poll
+    required: true
+  expected-status:
+    description: The HTTP status that is expected
+    required: true
+    default: "200"
+  timeout:
+    description: The maximum time the polling is allowed to run for (in milliseconds)
+    required: true
+    default: "60000"
+  header-name:
+    description: The header to look for
+    required: false
+  header-value:
+    description: The header value to match
+    required: false    
+
+
+runs:
+  using: composite
+
+  steps:
+    - name: Run a script
+      env: 
+        url: ${{ inputs.url }}
+        expectedStatus: ${{ inputs.expected-status }}
+        timeout: ${{ inputs.timeout }}
+        headerName: ${{ inputs.header-name }}
+        expectedHeaderValue: ${{ inputs.header-value }}
+      run: ./action.sh
