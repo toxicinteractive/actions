@@ -27,6 +27,10 @@ runs:
   steps:
     - name: Check out the repository to the runner
       uses: actions/checkout@v4  
+    - name: Determine path
+      shell: bash
+      run: |
+        echo $(pwd)
     - name: Wait for endpoint
       env: 
         url: ${{ inputs.url }}
@@ -35,4 +39,4 @@ runs:
         headerName: ${{ inputs.header-name }}
         expectedHeaderValue: ${{ inputs.header-value }}
       shell: bash
-      run: ./wait-for-endpoint/action.sh
+      run: wait-for-endpoint/action.sh
