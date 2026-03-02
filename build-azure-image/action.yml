@@ -18,6 +18,10 @@ inputs:
     description: Dockerfile build args
     required: false
 
+  secrets:
+    description: Dockerfile build secrets
+    required: false
+
   cache-from:
     description: Cache options to buildx
     required: false
@@ -52,5 +56,6 @@ runs:
         tags: ${{ inputs.image-tags }}
         file: ./Dockerfile
         build-args: ${{ inputs.build-args }}
+        secrets: ${{ inputs.secrets }}
         cache-from: ${{ inputs.cache-from }}
         cache-to: ${{ inputs.cache-to }}
