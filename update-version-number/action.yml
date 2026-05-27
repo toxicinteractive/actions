@@ -48,7 +48,7 @@ runs:
 
     # update app settings
     - name: Add version number to app settings
-      uses: azure/CLI@v2
+      uses: azure/cli@v3
 
       with:
         inlineScript: |

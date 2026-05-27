@@ -31,7 +31,7 @@ runs:
 
     # swap slots
     - name: Swap slots
-      uses: azure/CLI@v2
+      uses: azure/cli@v3
 
       with:
         inlineScript: |

@@ -35,7 +35,7 @@ runs:
 
     # get app settings from the source slot
     - name: Copy app settings from the source slot
-      uses: azure/CLI@v2
+      uses: azure/cli@v3
 
       with:
         inlineScript: |
@@ -48,7 +48,7 @@ runs:
 
     # set app settings on the destination slot
     - name: Copy app settings to the destination slot
-      uses: azure/CLI@v2
+      uses: azure/cli@v3
 
       with:
         inlineScript: |
